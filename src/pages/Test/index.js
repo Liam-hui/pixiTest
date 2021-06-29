@@ -9,6 +9,8 @@ function Test() {
   const containerRef = useRef()
   const appRef = useRef()
 
+  // const { x } = useSpring({ from: { x: 0 }, x: 1, config: { duration: 1000 } })
+
   useEffect(() => {
     const app = new PIXI.Application()
     appRef.current = app
@@ -25,9 +27,17 @@ function Test() {
         square.height = 50
         square.x = x * 100
         square.y = y * 100
+        square.angle = 30
         container.addChild(square)
       }
     }
+
+    app.ticker.add((delta) => {
+      for (const square of container.children) {
+        square.angle += 1 * delta
+      }
+      // container.rotation -= 0.01 * delta;
+  });
 
   }, [])
 
