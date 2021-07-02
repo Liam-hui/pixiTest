@@ -1,51 +1,44 @@
-import React, { useEffect, useRef } from 'react'
-import * as PIXI from 'pixi.js'
+import React, { useState, useEffect, useRef } from 'react'
+import * as THREE from 'three'
 
+
+import Card from '@/components/Card'
 
 import { StyledContainer } from './styles'
 
-function Test() {
+
+const Test = () => {
 
   const containerRef = useRef()
-  const appRef = useRef()
 
-  // const { x } = useSpring({ from: { x: 0 }, x: 1, config: { duration: 1000 } })
+  let camera, scene, renderer;
+  let geometry, material, mesh;
 
   useEffect(() => {
-    const app = new PIXI.Application()
-    appRef.current = app
-    containerRef.current.appendChild(app.view)
+    camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10 );
+    camera.position.z = 1;
 
-    const container = new PIXI.Container()
-    app.stage.addChild(container)
+    scene = new THREE.Scene();
 
-    for (let x = 0; x < 5; x++) {
-      for (let y = 0; y < 5; y++) {
-        const square = new PIXI.Sprite(PIXI.Texture.WHITE)
-        square.tint = 0xff0000
-        square.width = 50
-        square.height = 50
-        square.x = x * 100
-        square.y = y * 100
-        square.angle = 30
-        container.addChild(square)
-      }
-    }
+    geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
+    material = new THREE.MeshNormalMaterial();
 
-    app.ticker.add((delta) => {
-      for (const square of container.children) {
-        square.angle += 1 * delta
-      }
-      // container.rotation -= 0.01 * delta;
-  });
+    mesh = new THREE.Mesh( geometry, material );
+    scene.add( mesh );
+
+    renderer = new THREE.WebGLRenderer( { antialias: true } );
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    // renderer.setAnimationLoop( animation );
+    // containerRef.current.appendChild( renderer.domElement );
 
   }, [])
 
+
   return (
     <StyledContainer ref={containerRef}>
-      asdfasdf
+      <Card/>
     </StyledContainer>
-  );
+  )
 }
 
 export default Test

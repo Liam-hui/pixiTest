@@ -4,6 +4,7 @@ import { ConnectedRouter } from 'connected-react-router';
 
 import Home from '@/pages/Home'
 import Test from '@/pages/Test'
+import ThreeCanvas from '@/pages/ThreeCanvas'
 
 import history from './history';
 
@@ -11,8 +12,11 @@ const Routes = () => (
   <Router history={history}>
     <Switch>
       <Route exact path="/">
-        <Home/>
+        <ThreeCanvas/>
       </Route>
+      {/* <Route exact path="/">
+        <Home/>
+      </Route> */}
       <Route path="/test">
         <Test/>
       </Route>
